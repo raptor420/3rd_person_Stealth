@@ -1,0 +1,14 @@
+# Blender MTL File: 'box_opened_damaged.blend'
+# Material Count: 1
+
+newmtl Material
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\Marv\AppData\Local\Temp\Temp1_box_yethiel.zip\opened\diff01.png
+map_Bump C:\\Users\\Marv\\AppData\\Local\\Temp\\Temp1_box_yethiel.zip\\opened\\diff01_NRM.png
+map_Ks C:\\Users\\Marv\\AppData\\Local\\Temp\\Temp1_box_yethiel.zip\\opened\\SPEC_diff01.png
