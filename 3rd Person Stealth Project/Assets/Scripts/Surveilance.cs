@@ -14,7 +14,6 @@ public class Surveilance : MonoBehaviour
     public float viewAngle;
     Transform player;
     public LayerMask viewMask;
-    Color OGspotlightcolor;
     public float timeToSpotPlayer = .5f;
     [SerializeField]
     float PlayerVisibleTimer;
@@ -86,7 +85,7 @@ public class Surveilance : MonoBehaviour
         PlayerVisibleTimer = Mathf.Clamp(PlayerVisibleTimer, 0, timeToSpotPlayer);
         if (block != null)
         {
-            block.SetColor("_BaseColor", Color.Lerp(Color.yellow, Color.red, PlayerVisibleTimer / timeToSpotPlayer));
+            block.SetColor("_Color", Color.Lerp(Color.yellow, Color.red, PlayerVisibleTimer / timeToSpotPlayer));
             renderer.SetPropertyBlock(block);
         }
         
@@ -120,13 +119,13 @@ public class Surveilance : MonoBehaviour
     }
     private void LateUpdate()
     {
-        DrawFieldOfView();
+      //  DrawFieldOfView();
     }
     IEnumerator LookControl(Vector3[] Waypoints)
     {
         transform.LookAt(Waypoints[0]);
         int targetwaypointindex = 1;
-        //look yield ret lookpath
+        //look yield ret lookpathssssss
         Vector3 currentpath = Waypoints[targetwaypointindex];
         while (true)
         {
@@ -175,7 +174,7 @@ public class Surveilance : MonoBehaviour
         }
        // Gizmos.DrawLine(PreviousPoint, Startposition);
         Gizmos.color = Color.red;
-      //  Gizmos.DrawWireSphere(transform.position,  viewDistance);
+        Gizmos.DrawWireSphere(transform.position,  viewRadius);
 
     }
     bool CanSee()
@@ -190,11 +189,11 @@ public class Surveilance : MonoBehaviour
                 if (!Physics.Linecast(transform.position, player.position, viewMask)) // if not wall
                 {
                     //EnemySpotted = true;
-                    if (!player.GetComponent<PLayerController2>().InBox)
+                    if (!player.GetComponent<PlayerController>().InBox)
                     {
                         return true;
                     }
-                    else if(player.GetComponent<PLayerController2>().InBox && player.GetComponent<PLayerController2>().InputDir.magnitude >0)
+                    else if(player.GetComponent<PlayerController>().InBox && player.GetComponent<PlayerController>().InputDir.magnitude >0)
                     {
                         return true;
                     }
