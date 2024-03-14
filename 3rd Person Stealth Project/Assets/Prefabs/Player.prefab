@@ -71,7 +71,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.94, z: 0.05}
+  m_Center: {x: 0, y: 1, z: 0.05}
 --- !u!114 &1110290974972737138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,7 +108,7 @@ MonoBehaviour:
   InFireArmStance: 0
   InputDir: {x: 0, y: 0}
   AllowPlayertoMove: 0
-  GravityMultiplier: 1.5
+  GravityMultiplier: 9.8
   InBox: 0
   BoxTransform: {fileID: 2870025890088020183}
 --- !u!114 &1110290974972737143
@@ -125,12 +125,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GunTip: {fileID: 5180504186469828761}
   PlayerAnim: {fileID: 2636924433511391819}
-  PlayerVisionRadius: 5
+  PlayerVisionRadius: 6
   Targetmask:
     serializedVersion: 2
     m_Bits: 512
-  NearestTarget: {fileID: 0}
-  ViewingAngle: 90
+  nearestTarget: {fileID: 0}
+  lockedTarget: {fileID: 0}
+  ViewingAngle: 55
   TargetsWithinAngle: []
   GunLine: {fileID: 0}
 --- !u!1 &2822475861664761109

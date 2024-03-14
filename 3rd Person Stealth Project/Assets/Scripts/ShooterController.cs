@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ShooterController : MonoBehaviour
 {
+    PlayerController playerController;
     public Transform GunTip;
     bool ShootingStance;
     public Animator PlayerAnim;
@@ -12,7 +13,9 @@ public class ShooterController : MonoBehaviour
     public float PlayerVisionRadius = 5f;
     public LayerMask Targetmask;
     [SerializeField]
-    Transform NearestTarget;
+    Transform nearestTarget;
+    [SerializeField]
+    Transform lockedTarget;
     //Transform[] TargetsInAngle;
     public float ViewingAngle;
     [SerializeField]
@@ -22,7 +25,7 @@ public class ShooterController : MonoBehaviour
     {
         TargetsWithinAngle = new List<Transform>();
         GunLine = GunTip.GetComponent<LineRenderer>();
-
+        playerController = GetComponent<PlayerController>();    
     }
     private void Update()
     {
@@ -30,21 +33,42 @@ public class ShooterController : MonoBehaviour
         bool firing = PlayerAnim.GetBool("IsFiring");
         LaserAimedDeviceToggle(firing);
         RadarSystem();
-      
-        if (TargetsWithinAngle.Count != 0)
+         
+        nearestTarget = GetClosestTarget(TargetsWithinAngle);
+          
 
+        
+       if (firing && nearestTarget)
         {
-            NearestTarget = GetClosestTarget(TargetsWithinAngle);
-           // Debug.Log(NearestTarget.ToString());
-           // Debug.Log(GetClosestTarget(TargetsWithinAngle).ToString());
+            //some stuff here
+            //firing and input di. magnitude = 0 do this 
+            if (lockedTarget == null)
+            {
+                Debug.Log("loooking");
+                LookManager(nearestTarget);
+            }
+            if (playerController.InputDir.magnitude == 0)
+            {
+                LookManager(nearestTarget);
 
-        }
-       if (firing && NearestTarget)
-        {
-            LookManager(NearestTarget);
+            }
+            /* if (lockedTarget == null)
+             {
+                 LookManager(nearestTarget);
+                 lockedTarget = nearestTarget;
+             }
+
+             if (playerController.InputDir.magnitude == 0)
+             {
+                 LookManager(nearestTarget);
+                 lockedTarget = nearestTarget;
+             }*/
+
         }
        else
         {
+            lockedTarget = null;
+
             //NearestTarget = null;
 
         }
@@ -60,6 +84,7 @@ public class ShooterController : MonoBehaviour
         // transform.LookAt(NearestTarget.position);
         float targetRotAngle = (Mathf.Atan2(TargetDir.x, TargetDir.z)) * Mathf.Rad2Deg;
         transform.eulerAngles = Vector3.up * targetRotAngle;
+        lockedTarget = target;
     }
 
    
@@ -99,7 +124,6 @@ public class ShooterController : MonoBehaviour
     void RadarSystem()
     {
         TargetsWithinAngle.Clear(); // this is important step
-        NearestTarget = null;
         Collider[] TargetsinRange = Physics.OverlapSphere(transform.position, PlayerVisionRadius, Targetmask);
         if (TargetsinRange.Length == 0)
         {
@@ -126,24 +150,28 @@ public class ShooterController : MonoBehaviour
 
 
     }
-    Transform GetClosestTarget(List<Transform> Targets)
+    Transform GetClosestTarget(List<Transform> targetsWithinAngle)
     { 
         Transform Nearest =null;
         var currentdistance =Mathf.Infinity; 
-        for(int i =0; i < Targets.Count; i++)
+        if(targetsWithinAngle.Count>0)
         {
-            //  var NewDistance = (Targets[i].position - transform.position).sqrMagnitude;
-            var NewDistance = Vector3.Distance(transform.position, Targets[i].position);
-
-            if (NewDistance < currentdistance)
+            for (int i = 0; i < targetsWithinAngle.Count; i++)
             {
-                currentdistance = NewDistance;
-                Nearest = Targets[i];
-                
+                //  var NewDistance = (Targets[i].position - transform.position).sqrMagnitude;
+                var NewDistance = Vector3.Distance(transform.position, targetsWithinAngle[i].position);
+
+                if (NewDistance < currentdistance)
+                {
+                    currentdistance = NewDistance;
+                    Nearest = targetsWithinAngle[i];
+
+                }
+
+
             }
-
-
         }
+   
         return Nearest;
 
     }
