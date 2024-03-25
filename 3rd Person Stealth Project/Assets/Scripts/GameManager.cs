@@ -16,9 +16,17 @@ public class GameManager : MonoBehaviour
            // DontDestroyOnLoad(this);
         }
         GameOver = false;
-        Surveilance.PlayerFound += GameIsOver;
+      
 
         
+    }
+    private void OnEnable()
+    {
+        BaseClassSpotter.OnSpotPlayer += GameIsOver;
+    }
+    private void OnDisable()
+    {
+        BaseClassSpotter.OnSpotPlayer -= GameIsOver;
     }
 
     // Update is called once per frame
@@ -28,23 +36,29 @@ public class GameManager : MonoBehaviour
     }
     void GameIsOver()
     {
+       StartCoroutine ( ProcessGameOver());
+    }
 
+    private IEnumerator ProcessGameOver()
+    {
         if (!GameOver)
         {
+            float delayTime = 1;
             Debug.Log("Game's Over");
             GameOver = true;
-            Invoke("Restartlevel", .5f);
-            Surveilance.PlayerFound -= GameIsOver;
+            yield return new  WaitForSeconds(delayTime);
+        //    Invoke("Restartlevel", .5f);
+            Restartlevel();
 
         }
-    } 
+    }
+
     public void LevelComplete()
     {
         if (!GameOver)
         {
 
             Debug.Log("WIN");
-            Surveilance.PlayerFound -= GameIsOver;
             LoadNextLevel();
         }
     }

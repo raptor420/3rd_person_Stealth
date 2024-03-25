@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 1110290974972737138}
   - component: {fileID: 1110290974972737144}
   - component: {fileID: 1110290974972737143}
+  - component: {fileID: 3145050219628600886}
+  - component: {fileID: 7281692294782791659}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -101,12 +103,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkespeed: 1
-  RunSpeed: 5
+  RunSpeed: 3
   TurnSmooth: 0.05
   smoothspeedtime: 0.1
   Anim: {fileID: 2636924433511391819}
-  InFireArmStance: 0
-  InputDir: {x: 0, y: 0}
+  inFireArmStance: 0
+  inputDir: {x: 0, y: 0}
   AllowPlayertoMove: 0
   GravityMultiplier: 9.8
   InBox: 0
@@ -134,6 +136,45 @@ MonoBehaviour:
   ViewingAngle: 55
   TargetsWithinAngle: []
   GunLine: {fileID: 0}
+  hitVFXPrefab: {fileID: 2514852225320769964, guid: cd6ae658059b7b644994cc0c122c4e84,
+    type: 3}
+--- !u!136 &3145050219628600886
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110290974972737137}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0
+  m_Height: 1.43
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.81, z: 0}
+--- !u!114 &7281692294782791659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110290974972737137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8f69a78603af7d4ab7a0fb2fe422827, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputDir: {x: 0, y: 0}
+  isClicking: 0
 --- !u!1 &2822475861664761109
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,43 +479,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4703707677970600, guid: e42189c530de6c944961b54c51a398e6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.146
+      value: 0.093
       objectReference: {fileID: 0}
     - target: {fileID: 4703707677970600, guid: e42189c530de6c944961b54c51a398e6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.05
+      value: -0.029
       objectReference: {fileID: 0}
     - target: {fileID: 4703707677970600, guid: e42189c530de6c944961b54c51a398e6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.031
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4703707677970600, guid: e42189c530de6c944961b54c51a398e6, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5
+      value: 0.52057195
       objectReference: {fileID: 0}
     - target: {fileID: 4703707677970600, guid: e42189c530de6c944961b54c51a398e6, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5
+      value: 0.4697978
       objectReference: {fileID: 0}
     - target: {fileID: 4703707677970600, guid: e42189c530de6c944961b54c51a398e6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.5
+      value: 0.5593941
       objectReference: {fileID: 0}
     - target: {fileID: 4703707677970600, guid: e42189c530de6c944961b54c51a398e6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5
+      value: 0.44201025
       objectReference: {fileID: 0}
     - target: {fileID: 4703707677970600, guid: e42189c530de6c944961b54c51a398e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -0.309
       objectReference: {fileID: 0}
     - target: {fileID: 4703707677970600, guid: e42189c530de6c944961b54c51a398e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 93.857
       objectReference: {fileID: 0}
     - target: {fileID: 4703707677970600, guid: e42189c530de6c944961b54c51a398e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 90
+      value: 80.338
       objectReference: {fileID: 0}
     - target: {fileID: 4703707677970600, guid: e42189c530de6c944961b54c51a398e6, type: 3}
       propertyPath: m_ConstrainProportionsScale

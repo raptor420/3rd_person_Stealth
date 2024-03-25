@@ -17,9 +17,9 @@ public class PlayerController : MonoBehaviour
     public Animator Anim;
     GameObject PlayerObject;
     [SerializeField]
-    private  bool InFireArmStance;
+    private  bool inFireArmStance;
     bool Fire;
-    public Vector2 InputDir;
+    public Vector2 inputDir;
     [SerializeField]
     bool AllowPlayertoMove;
     float CurrentSpeed;
@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public bool InBox;
     public Transform BoxTransform;
     Animator BoxAnim;
+    PlayerInput playerInput;
   //  public static event Action<bool> OnFireState;
      
     // Start is called before the first frame update
@@ -39,61 +40,60 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         InBox= false;
         BoxTransform.gameObject.SetActive(false);
-        
+        playerInput = GetComponent<PlayerInput>();  
+    }
+    private void OnEnable()
+    {
+        PlayerInput.onSpacePressed += PlayerInput_onSpacePressed;
+        PlayerInput.onReleaseClick += PlayerInput_onReleaseClick;
+    }
+    
+
+    private void PlayerInput_onReleaseClick()
+    {
+        if (!inFireArmStance) return;
+        Firing();
+    }
+
+    private void PlayerInput_onSpacePressed()
+    {
+      BoxControlToggle();   
+    }
+
+    private void OnDisable()
+    {
+        PlayerInput.onSpacePressed -= PlayerInput_onSpacePressed;
+        PlayerInput.onReleaseClick -= PlayerInput_onReleaseClick;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        InputDir = input.normalized;
+        Vector2 input = playerInput.inputDir;
+        inputDir = input.normalized;
 
-        TurnSmooth = InFireArmStance ? .3f  : 0.05f;
-        if (InputDir != Vector2.zero) // we can always move tho even if were not in stance;
+        TurnSmooth = inFireArmStance ? .3f : 0.05f;
+        if (inputDir != Vector2.zero) // we can always move tho even if were not in stance;
         {
             RotationManager();
         }
 
-            if ( !InFireArmStance && !Fire)
-            {
+        if (!inFireArmStance && !Fire)
+        {
             AllowPlayertoMove = true;
-                MoveCharacter();
-            }
+            MoveCharacter();
+        }
 
-            else
+        else
         {
             AllowPlayertoMove = false;
 
         }
-            // reseting g
+        // reseting g
         if (characterController.isGrounded)
         {
 
             gravity = 0;
-
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!InBox)
-            {
-                InBox = true;
-
-            }
-            else
-            {
-                InBox = false;
-            }
-        }
-        if (InBox)
-        {
-            BoxTransform.gameObject.SetActive(true);
-            PlayerObject.SetActive(false);
-            BoxAnim.SetFloat("Speed", InputDir.magnitude * RunSpeed);
-        }
-        else
-        {
-            BoxTransform.gameObject.SetActive(false);
-            PlayerObject.SetActive(true);
 
         }
 
@@ -103,39 +103,82 @@ public class PlayerController : MonoBehaviour
             AllowFireInput();
         }
 
-        float targetspeed = InputDir.magnitude * RunSpeed;
-        CurrentSpeed = Mathf.SmoothDamp(CurrentSpeed, targetspeed, ref SmoothVelocity, smoothspeedtime );
+        float targetspeed = inputDir.magnitude * RunSpeed;
+        CurrentSpeed = Mathf.SmoothDamp(CurrentSpeed, targetspeed, ref SmoothVelocity, smoothspeedtime);
 
         // passing animation  values
         if (!InBox)
         {
-            Anim.SetFloat("SpeedValue", InputDir.magnitude * 1, smoothspeedtime, Time.deltaTime);
-            Anim.SetBool("IsFiring", InFireArmStance);
+            Anim.SetFloat("SpeedValue", inputDir.magnitude * 1, smoothspeedtime, Time.deltaTime);
+            Anim.SetBool("IsFiring", inFireArmStance);
+        }
+
+        BoxAnimChecker();
+    }
+
+    private void BoxControlToggle()
+    {
+
+        if (!InBox)
+        {
+            InBox = true;
+
+        }
+        else
+        {
+            InBox = false;
+        }
+
+    }
+
+    private void BoxAnimChecker()
+    {
+        if (InBox)
+        {
+            BoxTransform.gameObject.SetActive(true);
+            PlayerObject.SetActive(false);
+            BoxAnim.SetFloat("Speed", playerInput.inputDir.magnitude * RunSpeed);
+        }
+        else
+        {
+            BoxTransform.gameObject.SetActive(false);
+            PlayerObject.SetActive(true);
+
         }
     }
+
     void AllowFireInput()
     {
-        if (Input.GetKey(KeyCode.Mouse0) && characterController.isGrounded)
+        if (playerInput.isClicking && characterController.isGrounded)
         {
-            InFireArmStance = true;
+            inFireArmStance = true;
             // get in stance, disable the move 
             FireStance();
 
         }
 
-        else if (Input.GetKeyUp(KeyCode.Mouse0))
+      /*  else if (Input.GetKeyUp(KeyCode.Mouse0))
         {
-            InFireArmStance = false;
-            //fire
-            StartCoroutine(FireGun());
-        }
+            Firing();
+        }*/
         else
         {
-            InFireArmStance = false;
+            inFireArmStance = false;
         }
     }
-   
+
+    private void Firing()
+    {
+        inFireArmStance = false;
+        //fire
+        StartCoroutine(FireGun());
+    }
+    public bool GetIsInFireArmStance()
+    {
         
+        return inFireArmStance;
+    }
+
     void MoveCharacter()
     {
 
@@ -151,7 +194,7 @@ public class PlayerController : MonoBehaviour
 
     void RotationManager()
     {
-        float targetRot = (Mathf.Atan2(InputDir.x, InputDir.y)) * Mathf.Rad2Deg;
+        float targetRot = (Mathf.Atan2(inputDir.x, inputDir.y)) * Mathf.Rad2Deg;
         transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRot, ref turnSmoothVelocity, TurnSmooth);
 
     }
@@ -160,7 +203,7 @@ public class PlayerController : MonoBehaviour
     {
 
         AllowPlayertoMove = false;
-        Anim.SetBool("IsFiring",InFireArmStance);
+        Anim.SetBool("IsFiring",inFireArmStance);
 
     }
     IEnumerator FireGun()
@@ -169,8 +212,7 @@ public class PlayerController : MonoBehaviour
         Fire = true;
         Anim.SetBool("Fire", Fire);
         yield return new WaitForSeconds(.4f);
-        Debug.Log("PEW");
-
+      //  GetComponent<ShooterController>().Shoot
         Fire = false;
         Anim.SetBool("Fire", Fire);
         AllowPlayertoMove = true;

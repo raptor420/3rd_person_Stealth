@@ -14,19 +14,19 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.083481655, g: 0.12864897, b: 0.26415092, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -353,6 +353,24 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a452e5924cd9994487b6bf6e78c5b14, type: 3}
+--- !u!1 &696564181 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9128654824595123458, guid: b12380e292f8d324ba077fcaba8467e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 713889535}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &696564186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696564181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a62eb5c9e9f7f1429976551fa798e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &713889535
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -419,7 +437,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9128654824595123458, guid: b12380e292f8d324ba077fcaba8467e2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 696564186}
   m_SourcePrefab: {fileID: 100100000, guid: b12380e292f8d324ba077fcaba8467e2, type: 3}
 --- !u!1001 &727300509
 PrefabInstance:
@@ -639,7 +661,7 @@ PrefabInstance:
     - target: {fileID: 9192625253295207271, guid: 0d9fad25e067ed349ac239826d4bb339,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.76
+      value: 0.58
       objectReference: {fileID: 0}
     - target: {fileID: 9192625253673140643, guid: 0d9fad25e067ed349ac239826d4bb339,
         type: 3}
@@ -704,7 +726,7 @@ PrefabInstance:
     - target: {fileID: 9192625254479942395, guid: 0d9fad25e067ed349ac239826d4bb339,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.3
+      value: -0.78
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -951,7 +973,7 @@ Camera:
   m_GameObject: {fileID: 1688356810}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -1002,7 +1024,7 @@ Transform:
   m_GameObject: {fileID: 1688356810}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5170563, y: 0, z: 0, w: 0.8559514}
-  m_LocalPosition: {x: 0.9069091, y: 7.9523263, z: -3.5696917}
+  m_LocalPosition: {x: 0.97987705, y: 7.9523263, z: -3.5696917}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1152,14 +1174,14 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.33725488, g: 0.60470515, b: 0.7882353, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.41196275, g: 0.33725488, b: 0.7882353, a: 1}
+  m_Intensity: 0.7
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -1324,7 +1346,7 @@ PrefabInstance:
     - target: {fileID: 4111788761752091198, guid: b8e83b205932a9a48bdeb1f652a5f22f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.9069091
+      value: 0.97987705
       objectReference: {fileID: 0}
     - target: {fileID: 4111788761752091198, guid: b8e83b205932a9a48bdeb1f652a5f22f,
         type: 3}
@@ -1553,6 +1575,50 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d9fad25e067ed349ac239826d4bb339, type: 3}
+--- !u!1 &1993401897
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1993401899}
+  - component: {fileID: 1993401898}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1993401898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993401897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5b635c9b3d90b418598c8be69a14f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1993401899
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993401897}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.924417, y: 5, z: 6.907226}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1575,3 +1641,4 @@ SceneRoots:
   - {fileID: 770873854}
   - {fileID: 1985773589}
   - {fileID: 713889535}
+  - {fileID: 1993401899}

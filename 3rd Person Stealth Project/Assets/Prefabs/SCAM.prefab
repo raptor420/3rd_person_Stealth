@@ -741,7 +741,7 @@ MonoBehaviour:
   Spotlight: {fileID: 9192625253673279204}
   viewRadius: 4
   viewAngle: 90
-  viewMask:
+  obstacleMask:
     serializedVersion: 2
     m_Bits: 256
   timeToSpotPlayer: 0.25

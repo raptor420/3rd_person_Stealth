@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Surveilance : MonoBehaviour
+public class Surveilance : BaseClassSpotter
 {
     public Transform PathHolder;
     Vector3 PreviousPoint;
@@ -13,7 +13,7 @@ public class Surveilance : MonoBehaviour
     public float viewRadius;
     public float viewAngle;
     Transform player;
-    public LayerMask viewMask;
+    public LayerMask obstacleMask;
     public float timeToSpotPlayer = .5f;
     [SerializeField]
     float PlayerVisibleTimer;
@@ -31,7 +31,6 @@ public class Surveilance : MonoBehaviour
     [SerializeField]
     Material CameraViewMat;
     public Renderer renderer;
-
     public float meshResolution;
     public int edgeResolveIterations;
     public float edgeDstThreshold;
@@ -39,8 +38,6 @@ public class Surveilance : MonoBehaviour
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
     MaterialPropertyBlock block;
-    static public event Action PlayerFound;
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -102,11 +99,7 @@ public class Surveilance : MonoBehaviour
             {
                 ShowSurprised();
             }
-            if (PlayerFound != null)
-            {
-                PlayerFound();
-
-            }
+            PlayerSpotted();
             Debug.Log("spotted");
 
         }
@@ -146,7 +139,7 @@ public class Surveilance : MonoBehaviour
 
         
         Vector3 dirtolook = (LookTarget - transform.position).normalized;
-        float targetangle = 90 - Mathf.Atan2(dirtolook.z, dirtolook.x) * Mathf.Rad2Deg;
+        float targetangle =  Mathf.Atan2(dirtolook.x, dirtolook.z) * Mathf.Rad2Deg;
         while (Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, targetangle)) > 0.05f)
         {
             if (!EnemySpotted)
@@ -180,20 +173,24 @@ public class Surveilance : MonoBehaviour
     bool CanSee()
     {
         if (Vector3.Distance(transform.position, player.position) < viewRadius)
-        {
-            Vector3 dirToPlayer = (player.position - transform.position).normalized;
+        { 
+            Vector3 playerPos = player.position;
+            playerPos.y = 1;
+            Vector3 dirToPlayer = (playerPos - transform.position).normalized;
             dirToPlayer.y = 0;
             float angleBetweenGuardandPlayer = Vector3.Angle(transform.forward, dirToPlayer);
+            float dist = Vector3.Distance(transform.position, playerPos);
             if (angleBetweenGuardandPlayer < viewAngle /2f)
             {
-                if (!Physics.Linecast(transform.position, player.position, viewMask)) // if not wall
+                Debug.DrawLine(transform.position, playerPos);
+                if (!Physics.Raycast(transform.position, dirToPlayer,out RaycastHit hit, dist)) // if not wall
                 {
-                    //EnemySpotted = true;
+
                     if (!player.GetComponent<PlayerController>().InBox)
                     {
                         return true;
                     }
-                    else if(player.GetComponent<PlayerController>().InBox && player.GetComponent<PlayerController>().InputDir.magnitude >0)
+                    else if (player.GetComponent<PlayerController>().InBox && player.GetComponent<PlayerController>().inputDir.magnitude > 0)
                     {
                         return true;
                     }
@@ -203,11 +200,15 @@ public class Surveilance : MonoBehaviour
                     }
 
                 }
+                else
+                {
+                    Debug.Log(hit.transform.name);
+                }
+                return false;
             }
 
 
         }
-       // EnemySpotted = false;
         return false;
     }
 
@@ -296,7 +297,7 @@ public class Surveilance : MonoBehaviour
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, dir, out hit, viewRadius,viewMask)) //playermask
+        if (Physics.Raycast(transform.position, dir, out hit, viewRadius,obstacleMask)) //playermask
         {
             return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
         }
@@ -350,6 +351,11 @@ public class Surveilance : MonoBehaviour
         }
 
         return new EdgeInfo(minPoint, maxPoint);
+    }
+
+    public override void PlayerSpotted()
+    {
+        OnPlayerSpotted();
     }
 
     public struct ViewCastInfo

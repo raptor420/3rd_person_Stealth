@@ -1065,10 +1065,12 @@ m_ResolvedPackages:
     - 4.9.3
     - 4.9.4
     - 4.10.0
+    - 4.11.0
     compatible:
     - 4.9.3
     - 4.9.4
     - 4.10.0
+    - 4.11.0
     recommended: 4.9.4
     deprecated: []
   dependencies:
