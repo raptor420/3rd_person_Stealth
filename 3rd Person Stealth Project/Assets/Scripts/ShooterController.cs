@@ -47,7 +47,7 @@ public class ShooterController : MonoBehaviour
     {
         Debug.Log(playerController.GetIsInFireArmStance());
 
-      if(  playerController.GetIsInFireArmStance())
+      if( ! playerController.InBox)
             Shoot();
         
     }

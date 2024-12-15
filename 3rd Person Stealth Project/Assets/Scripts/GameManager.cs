@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     {
         if (!GameOver)
         {
-            float delayTime = 1.5f;
+            float delayTime =1.5f;
             Debug.Log("Game's Over");
             GameOver = true;
             yield return new  WaitForSeconds(delayTime);
