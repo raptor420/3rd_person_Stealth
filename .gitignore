@@ -2,7 +2,7 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
-/[Ll]ibrary/
+/3rd Person Stealth Project/Library/
 /[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
