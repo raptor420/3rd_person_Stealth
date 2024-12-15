@@ -47,7 +47,7 @@ public class ShooterController : MonoBehaviour
     {
         Debug.Log(playerController.GetIsInFireArmStance());
 
-      if( ! playerController.GetIsInFireArmStance())
+      if(  playerController.GetIsInFireArmStance())
             Shoot();
         
     }
@@ -203,7 +203,7 @@ public class ShooterController : MonoBehaviour
         Vector3 adjustedCentralPos = transform.position + Vector3.up * height;
         TargetsWithinAngle.Clear(); // this is important step
         Collider[] TargetsinRange = Physics.OverlapSphere(adjustedCentralPos, PlayerVisionRadius, Targetmask);
-        Debug.Log(TargetsinRange.Count());
+     //   Debug.Log(TargetsinRange.Count());
         if (TargetsinRange.Length == 0)
         {
             TargetsWithinAngle.Clear();
